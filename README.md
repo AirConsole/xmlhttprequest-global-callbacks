@@ -17,13 +17,13 @@ Now you can register global callbacks for all XMLHTTPRequests using `window.xmlh
 ```javascript
 window.xmlhttprequest_global_callbacks = {
   "progress": function(event, request_method, request_url) {
-    console.log(event, url);
+    console.log(event, request_method, request_url);
   },
   "load": function(event, request_method, request_url) {
-    console.log(event, url);
+    console.log(event, request_method, request_url);
   },
   "error": function(event, request_method, request_url) {
-    console.log(event, url);
+    console.log(event, request_method, request_url);
   }
 }
 ```
