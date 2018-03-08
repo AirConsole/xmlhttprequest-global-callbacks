@@ -1,0 +1,37 @@
+<html>
+<head>
+  <script type="text/javascript" src="../xmlhttprequest-global-callbacks.min.js"></script>
+  <script type="text/javascript">
+    window.xmlhttprequest_global_callbacks = {
+      "progress": function(event, request_method, request_url) {
+        log(event, request_method, request_url);
+      },
+      "load": function(event, request_method, request_url) {
+        log(event, request_method, request_url);
+      },
+      "error": function(event, request_method, request_url) {
+        log(event, request_method, request_url);
+      }
+    }
+
+    function log(event, request_method, request_url) {
+      console.log(request_method, request_url, event);
+      var line = document.createElement("div");
+      line.innerHTML = "Method: " + request_method + " Url: " + request_url + " Event: " + event.type;
+      document.body.appendChild(line);
+    }
+
+
+    function start() {
+      var req = new XMLHttpRequest();
+      req.onload = function() {
+        console.log("onload")
+      }
+      req.open('GET', "data.txt", true);
+      req.send();
+    }
+
+  </script>
+</head>
+<body onload="start()"></body>
+</html>

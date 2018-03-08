@@ -1,0 +1,82 @@
+<html>
+<script type="text/javascript" src="../xmlhttprequest-global-callbacks.min.js">
+</script>
+<script type="text/javascript">
+
+  function assert(value, error) {
+    if (!value) {
+      throw error;
+    }
+  }
+
+  function runTests() {
+    var result = document.getElementById("test-result");
+    for (var test in tests) {
+      try {
+        window.xmlhttprequest_global_callbacks = {};
+        tests[test]();
+        result.innerHTML += "<div style='color:green'>" + test + " PASS</div>";
+      } catch(e) {
+        result.innerHTML += "<div style='color:red'>" + test + " FAILED: " +
+            e + "</div>"
+      }
+    }
+  }
+
+  var tests = {
+    methodOpen: function() {
+      if (document.location.href.indexOf("http://") == -1 &&
+          document.location.href.indexOf("https://") == -1) {
+        assert(false, "This test can only run if this file is " +
+            "hosted on a webserver!")
+        return;
+      }
+      var failed = false;
+      var custom_onload_called = false;
+      var global_onload_called = false;
+      window.xmlhttprequest_global_callbacks = {
+        "load": function(event, method, url) {
+          try {
+            assert(event.type == "load", "")
+            assert(method == "GET", "")
+            assert(url == "data.txt", "")
+            assert(req.responseText == "example data", "")
+            global_onload_called = true;
+          } catch (e) {
+            failed = "open failed: " + req.responseText
+          }
+        }
+      }
+      var req = new XMLHttpRequest();
+      req.onload = function(data) {
+        custom_onload_called = true;
+        try {
+          assert(req.responseText == "example data", "")
+          custom_onload_called = true;
+        } catch (e) {
+          failed = "open failed: " + req.responseText
+        }
+      };
+
+      req.open('GET', "data.txt", false);
+      req.send();
+      assert(req.readyState == 4, "readyState != 4:" + req.readyState)
+      assert(custom_onload_called, "custom onload not called")
+      assert(global_onload_called, "global onload not called")
+      if (failed) {
+        throw failed;
+      }
+    },
+    constants: function() {
+      assert((XMLHttpRequest.LOADING ||
+              XMLHttpRequest.READYSTATE_LOADING) == 3,
+          "XMLHttpRequest.LOADING != 3");
+    }
+  }
+
+
+</script>
+<body onload="runTests()">
+<div id="test-result"></div>
+</body>
+</html>
