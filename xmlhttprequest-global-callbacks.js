@@ -43,6 +43,7 @@
         },
         set: function(target, name, value) {
           target[name] = value;
+          return true;
         }
       });
       return result;
