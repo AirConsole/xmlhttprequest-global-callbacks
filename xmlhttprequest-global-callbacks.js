@@ -13,13 +13,13 @@
       var request_method;
       var request_url;
       var xmlhttprequest = new OriginalXMLHTTPRequest(arg);
-      if (window.xmlhttprequest_global_callbacks) {
-        for (var name in window.xmlhttprequest_global_callbacks) {
+      if (window.xmlHTTPRequestGlobalCallbacks) {
+        for (var name in window.xmlHTTPRequestGlobalCallbacks) {
           (function(on) {
             xmlhttprequest.addEventListener(
                 on,
                 function (evt) {
-                  window.xmlhttprequest_global_callbacks[on](
+                  window.xmlHTTPRequestGlobalCallbacks[on](
                       evt, request_method, request_url);
                 });
           })(name);

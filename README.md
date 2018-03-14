@@ -12,10 +12,10 @@ Just download xmlhttprequest-global-callbacks.min.js and include it in your html
 ```html
 <script type="text/javascript" src="xmlhttprequest-length-computable.min.js"></script>
 ```
-Now you can register global callbacks for all XMLHTTPRequests using `window.xmlhttprequest_global_callbacks`
+Now you can register global callbacks for all XMLHTTPRequests using `window.xmlHTTPRequestGlobalCallbacks`
 
 ```javascript
-window.xmlhttprequest_global_callbacks = {
+window.xmlHTTPRequestGlobalCallbacks = {
   "progress": function(event, request_method, request_url) {
     console.log(event, request_method, request_url);
   },

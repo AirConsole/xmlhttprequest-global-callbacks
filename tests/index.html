@@ -13,7 +13,7 @@
     var result = document.getElementById("test-result");
     for (var test in tests) {
       try {
-        window.xmlhttprequest_global_callbacks = {};
+        window.xmlHTTPRequestGlobalCallbacks = {};
         tests[test]();
         result.innerHTML += "<div style='color:green'>" + test + " PASS</div>";
       } catch(e) {
@@ -34,7 +34,7 @@
       var failed = false;
       var custom_onload_called = false;
       var global_onload_called = false;
-      window.xmlhttprequest_global_callbacks = {
+      window.xmlHTTPRequestGlobalCallbacks = {
         "load": function(event, method, url) {
           try {
             assert(event.type == "load", "")
